@@ -1,0 +1,567 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--g:#c9a84c;--g2:#e8d49a;--g3:#7a6330;--bk:#0a0a0a;--bk2:#111;--bk3:#1a1a1a}
+body{background:var(--bk);color:#f0e6c8;font-family:'Segoe UI',sans-serif;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+canvas#bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45}
+
+section,nav,footer,.trust,.stats-bar{position:relative;z-index:1}
+
+nav{display:flex;justify-content:space-between;align-items:center;padding:.65rem 1.5rem;background:rgba(10,10,10,.94);border-bottom:1px solid #c9a84c55;position:sticky;top:0;z-index:200;backdrop-filter:blur(10px);flex-wrap:wrap;gap:.5rem}
+.logo{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:.18em;color:#f0e6c8;cursor:pointer}
+.logo span{color:var(--g)}
+.nav-tabs{display:flex;gap:.2rem;flex-wrap:wrap}
+.tab-btn{background:none;border:1px solid transparent;color:#b8a88a;padding:.38rem .9rem;border-radius:50px;font-size:.75rem;cursor:pointer;letter-spacing:.05em;transition:all .2s;white-space:nowrap}
+.tab-btn:hover{color:var(--g);border-color:#c9a84c44}
+.tab-btn.active{background:var(--g);color:#0a0a0a;border-color:var(--g);font-weight:700}
+.nav-cta{background:var(--g);color:#0a0a0a;padding:.4rem 1rem;border-radius:50px;font-size:.76rem;font-weight:700;border:none;cursor:pointer;transition:background .2s;letter-spacing:.05em}
+.nav-cta:hover{background:var(--g2)}
+
+.page{display:none;animation:fadeIn .5s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+.hero{min-height:400px;display:flex;align-items:center;justify-content:center;padding:52px 2rem 32px;text-align:center;border-bottom:1px solid #1a1600;perspective:900px}
+.hero-inner{transform-style:preserve-3d}
+.hero-eyebrow{font-size:.7rem;letter-spacing:.22em;color:var(--g3);text-transform:uppercase;margin-bottom:14px;animation:fadeUp .7s .1s both}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,7vw,72px);font-weight:300;line-height:1.0;color:#f5ecd4;margin-bottom:10px;animation:fadeUp .7s .25s both}
+.hero h1 em{font-style:italic;color:var(--g)}
+.hero-rule{width:44px;height:1px;background:var(--g);margin:18px auto;animation:fadeUp .5s .4s both}
+.hero p{color:#9a8f78;font-size:.9rem;line-height:1.7;max-width:380px;margin:0 auto 24px;animation:fadeUp .7s .5s both}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .65s both}
+.btn-g{background:var(--g);color:#0a0a0a;padding:.65rem 1.5rem;border-radius:50px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .2s}
+.btn-g:hover{background:var(--g2);transform:translateY(-2px)}
+.btn-o{background:transparent;color:var(--g);padding:.65rem 1.5rem;border-radius:50px;font-weight:600;font-size:.85rem;border:2px solid var(--g);cursor:pointer;transition:all .2s}
+.btn-o:hover{background:#c9a84c12}
+
+.bottles-row{display:flex;gap:12px;align-items:flex-end;justify-content:center;margin:36px 0 0;perspective:700px;animation:fadeUp .7s .8s both}
+.btl{border-radius:18px 18px 10px 10px;display:flex;align-items:center;justify-content:center;font-size:2rem;border:1px solid #c9a84c33;cursor:pointer;transition:transform .35s}
+.btl:hover{transform:translateY(-10px) rotateY(0deg) scale(1.07)!important}
+.btl-1{width:82px;height:152px;background:#1a1400;transform:rotateY(14deg) rotateZ(-5deg)}
+.btl-2{width:72px;height:132px;background:#2a1f00;transform:rotateY(-9deg) rotateZ(3deg) translateY(-12px)}
+.btl-3{width:62px;height:112px;background:#1f1800;transform:rotateY(6deg) rotateZ(-2deg) translateY(5px)}
+
+.trust{background:var(--g);color:#0a0a0a;padding:.8rem 2rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:.4rem;font-size:.78rem;font-weight:700}
+
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#1a1600}
+.stat{background:var(--bk);padding:20px 12px;text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:300;color:var(--g);line-height:1}
+.stat-lbl{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:#4a3d1a;margin-top:4px}
+
+.sec{padding:3rem 2rem;max-width:1100px;margin:0 auto}
+.sec-head{text-align:center;margin-bottom:2.2rem}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,4vw,36px);font-weight:300;font-style:italic;color:var(--g);margin-bottom:.4rem}
+.sec-sub{color:#7a7060;font-size:.85rem}
+.gold-line{width:36px;height:1px;background:var(--g);margin:.7rem auto 0}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.3rem}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.3rem}
+
+.pcard{background:var(--bk2);border:1px solid #c9a84c28;border-radius:16px;overflow:hidden;cursor:pointer;transition:all .32s;transform:perspective(500px) rotateY(0)}
+.pcard:hover{transform:perspective(500px) rotateY(-6deg) translateY(-8px);border-color:var(--g);box-shadow:0 18px 44px rgba(201,168,76,.14)}
+.pcard-img{height:148px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;position:relative;overflow:hidden}
+.pcard-img::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55))}
+.tag{position:absolute;top:9px;left:9px;z-index:2;font-size:.66rem;font-weight:600;color:var(--g);background:#c9a84c14;padding:.18rem .55rem;border-radius:50px;border:1px solid #c9a84c40;letter-spacing:.05em}
+.pcard-body{padding:.9rem 1rem}
+.pcard-name{font-size:.9rem;font-weight:700;color:#f5ecd4;margin-bottom:.25rem}
+.pcard-desc{font-size:.74rem;color:#7a7060;line-height:1.5;margin-bottom:.7rem}
+.pcard-foot{display:flex;justify-content:space-between;align-items:center}
+.price{font-size:.98rem;font-weight:700;color:var(--g)}
+.price-old{font-size:.74rem;color:#4a3d1a;text-decoration:line-through;margin-right:4px}
+.add-btn{background:var(--g);color:#0a0a0a;border:none;padding:.32rem .8rem;border-radius:50px;font-size:.72rem;font-weight:700;cursor:pointer;transition:background .2s}
+.add-btn:hover{background:var(--g2)}
+
+.cats-band{background:#0f0f0f;padding:2.5rem 2rem;border-top:1px solid #c9a84c16;border-bottom:1px solid #c9a84c16}
+.cats-inner{max-width:1100px;margin:0 auto}
+.cats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:.9rem;margin-top:1.8rem}
+.cat-card{background:var(--bk2);border:1px solid #c9a84c28;border-radius:12px;padding:1rem .8rem;text-align:center;cursor:pointer;transition:all .28s}
+.cat-card:hover{border-color:var(--g);background:#1a1400;transform:translateY(-5px) rotateX(4deg)}
+.cat-icon{font-size:1.7rem;display:block;margin-bottom:.4rem}
+.cat-name{font-size:.78rem;font-weight:600;color:#f5ecd4;margin-bottom:.15rem}
+.cat-count{font-size:.66rem;color:#5a5040}
+
+.parallax-band{background:#0e0d07;padding:44px 2rem;text-align:center;border-top:1px solid #2a2208;border-bottom:1px solid #2a2208;position:relative;overflow:hidden}
+.parallax-band::before{content:'◆';position:absolute;font-size:240px;color:#c9a84c07;top:-30px;left:50%;transform:translateX(-50%);pointer-events:none}
+.parallax-band blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,2.8vw,24px);font-weight:300;font-style:italic;color:#f5ecd4;max-width:520px;margin:0 auto;line-height:1.5;position:relative}
+.parallax-band cite{display:block;font-size:.72rem;font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--g3);margin-top:14px}
+
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem}
+.tcard{background:var(--bk2);border:1px solid #c9a84c28;border-radius:14px;padding:1.3rem;transition:all .28s}
+.tcard:hover{border-color:#c9a84c55;transform:translateY(-4px)}
+.stars{color:var(--g);font-size:.85rem;margin-bottom:.6rem;letter-spacing:2px}
+.tcard-text{font-size:.82rem;color:#8a8070;line-height:1.6;margin-bottom:.9rem;font-style:italic}
+.tcard-author{display:flex;align-items:center;gap:.5rem}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--g);color:#0a0a0a;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:700;flex-shrink:0}
+.author-name{font-size:.8rem;font-weight:600;color:#f5ecd4}
+.author-loc{font-size:.68rem;color:#5a5040}
+
+.cta-band{background:linear-gradient(135deg,#1a1400,#0a0a0a);border-top:1px solid var(--g);border-bottom:1px solid var(--g);padding:48px 2rem;text-align:center}
+.cta-band h2{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.5vw,34px);font-weight:300;font-style:italic;color:var(--g);margin-bottom:.6rem}
+.cta-band p{font-size:.88rem;color:#9a8f78;margin-bottom:1.4rem}
+.wa-btn{display:inline-flex;align-items:center;gap:.45rem;background:#25D366;color:#fff;padding:.7rem 1.6rem;border-radius:50px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .2s}
+.wa-btn:hover{background:#1da856;transform:translateY(-2px)}
+
+footer{background:#060606;color:#7a7060;padding:2.2rem 2rem 1.4rem;border-top:1px solid #c9a84c33;position:relative;z-index:1}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1.8rem;max-width:1100px;margin:0 auto 1.8rem}
+.footer-brand-name{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--g);letter-spacing:.15em;margin-bottom:.45rem}
+.footer-brand p{font-size:.76rem;color:#5a5040;line-height:1.6}
+.footer-col h4{color:var(--g);font-size:.78rem;font-weight:600;margin-bottom:.7rem;letter-spacing:.06em}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:.35rem}
+.footer-col ul a{color:#5a5040;text-decoration:none;font-size:.76rem;transition:color .2s}
+.footer-col ul a:hover{color:var(--g)}
+.footer-bottom{border-top:1px solid #c9a84c18;padding-top:.9rem;text-align:center;font-size:.7rem;color:#3a3028;max-width:1100px;margin:0 auto}
+
+.cart-toast{background:#111;border:1px solid var(--g);padding:.65rem 1rem;font-size:.78rem;color:var(--g);display:none;align-items:center;gap:.45rem;position:fixed;bottom:16px;right:16px;z-index:300;border-radius:8px}
+</style>
+
+<h2 class="sr-only">Novedades Lalo — Tienda completa con perfumes, cremas, accesorios y bolsas</h2>
+
+<canvas id="bg"></canvas>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">Novedades <span>Lalo</span></div>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="showPage('home')">Inicio</button>
+    <button class="tab-btn" onclick="showPage('cremas')">Cremas & Perfumes</button>
+    <button class="tab-btn" onclick="showPage('accesorios')">Detalles & Accesorios</button>
+    <button class="tab-btn" onclick="showPage('bolsas')">Bolsas para Dama</button>
+  </div>
+  <button class="nav-cta" onclick="sendPrompt('Ayúdame a hacer crecer mi tienda Novedades Lalo con estrategias de marketing digital')">Contactar</button>
+</nav>
+
+<!-- ══════════════════════ HOME ══════════════════════ -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <div class="hero-inner" id="heroInner">
+      <p class="hero-eyebrow">Negocio local · Hecho con amor</p>
+      <h1>Tu tienda favorita,<br><em>siempre cerca</em></h1>
+      <div class="hero-rule"></div>
+      <p>Fragancias, cremas, accesorios y bolsas. Todo lo que necesitas en un solo lugar — a precios que te encantan.</p>
+      <div class="hero-btns">
+        <button class="btn-g" onclick="showPage('cremas')">Ver Cremas & Perfumes</button>
+        <button class="btn-o" onclick="showPage('accesorios')">Ver Accesorios</button>
+      </div>
+      <div class="bottles-row">
+        <div class="btl btl-1" onclick="addCart('Loción Rosa',85)">🌸</div>
+        <div class="btl btl-2" onclick="addCart('Lavanda Noche',110)">💛</div>
+        <div class="btl btl-3" onclick="addCart('Brisa Cítrica',90)">✨</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="trust-item"><i class="ti ti-truck" aria-hidden="true"></i> Envío local rápido</div>
+    <div class="trust-item"><i class="ti ti-rosette" aria-hidden="true"></i> Calidad garantizada</div>
+    <div class="trust-item"><i class="ti ti-message-circle" aria-hidden="true"></i> Atención personalizada</div>
+    <div class="trust-item"><i class="ti ti-leaf" aria-hidden="true"></i> Productos selectos</div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-num">+500</div><div class="stat-lbl">Clientes</div></div>
+    <div class="stat"><div class="stat-num">100+</div><div class="stat-lbl">Productos</div></div>
+    <div class="stat"><div class="stat-num">5★</div><div class="stat-lbl">Calificación</div></div>
+    <div class="stat"><div class="stat-num">3yr</div><div class="stat-lbl">Experiencia</div></div>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head">
+      <div class="sec-title">Nuestras categorías</div>
+      <div class="sec-sub">Explora todo lo que tenemos para ti</div>
+      <div class="gold-line"></div>
+    </div>
+    <div class="grid-3">
+      <div class="pcard" onclick="showPage('cremas')">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1400,#2e2400);font-size:3.2rem">🌹</div>
+        <div class="pcard-body">
+          <div class="pcard-name">Cremas & Perfumes</div>
+          <div class="pcard-desc">Lociones, colonias y cremas faciales para lucir y sentirte increíble todos los días.</div>
+          <div class="pcard-foot"><span class="price">Desde $85</span><button class="add-btn" onclick="showPage('cremas')">Ver todo</button></div>
+        </div>
+      </div>
+      <div class="pcard" onclick="showPage('accesorios')">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#161616,#222);font-size:3.2rem">👒</div>
+        <div class="pcard-body">
+          <div class="pcard-name">Detalles & Accesorios</div>
+          <div class="pcard-desc">Calcetines, abanicos, maquillaje, cangureras, cinturones, lentes y gel para el pelo.</div>
+          <div class="pcard-foot"><span class="price">Desde $30</span><button class="add-btn" onclick="showPage('accesorios')">Ver todo</button></div>
+        </div>
+      </div>
+      <div class="pcard" onclick="showPage('bolsas')">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0a0a,#2e1500);font-size:3.2rem">👜</div>
+        <div class="pcard-body">
+          <div class="pcard-name">Bolsas para Dama</div>
+          <div class="pcard-desc">Bolsas de mano, clutch, crossbody y tote bags en estilos modernos y elegantes.</div>
+          <div class="pcard-foot"><span class="price">Desde $120</span><button class="add-btn" onclick="showPage('bolsas')">Ver todo</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="parallax-band reveal" id="parallaxBand">
+    <blockquote>"La belleza empieza cuando decides ser tú misma."<cite>— Novedades Lalo</cite></blockquote>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head"><div class="sec-title">Lo que dicen nuestras clientas</div><div class="sec-sub">La confianza de nuestra comunidad nos inspira</div><div class="gold-line"></div></div>
+    <div class="test-grid">
+      <div class="tcard"><div class="stars">★★★★★</div><p class="tcard-text">"La loción de rosa huele delicioso y deja la piel super suave. ¡Ya pedí la segunda!"</p><div class="tcard-author"><div class="avatar">ML</div><div><div class="author-name">María López</div><div class="author-loc">Cliente local</div></div></div></div>
+      <div class="tcard"><div class="stars">★★★★★</div><p class="tcard-text">"Los accesorios son hermosos y a buen precio. La bolsa que compré fue un éxito en la fiesta."</p><div class="tcard-author"><div class="avatar">CR</div><div><div class="author-name">Carmen Rivas</div><div class="author-loc">Cliente frecuente</div></div></div></div>
+      <div class="tcard"><div class="stars">★★★★★</div><p class="tcard-text">"La crema facial es increíble, mi piel se ve mucho mejor desde la primera semana de uso."</p><div class="tcard-author"><div class="avatar">SG</div><div><div class="author-name">Sofía García</div><div class="author-loc">Cliente nueva</div></div></div></div>
+    </div>
+  </div>
+
+  <div class="cta-band reveal">
+    <h2>¿Lista para lucir increíble? ✨</h2>
+    <p>Escríbenos y te ayudamos a encontrar lo que buscas</p>
+    <a href="https://wa.me/1234567890" class="wa-btn"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Pedir por WhatsApp</a>
+  </div>
+</div>
+
+<!-- ══════════════════════ CREMAS & PERFUMES ══════════════════════ -->
+<div class="page" id="page-cremas">
+  <div class="hero" style="min-height:300px;padding:42px 2rem 24px">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Novedades Lalo · Belleza & Fragancia</p>
+      <h1>Cremas &<br><em>Perfumes</em></h1>
+      <div class="hero-rule"></div>
+      <p>Lociones, colonias y cremas faciales que cuidan tu piel y te hacen brillar.</p>
+    </div>
+  </div>
+
+  <div class="trust" style="background:var(--g3)">
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-leaf" aria-hidden="true"></i> Ingredientes naturales</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-sparkles" aria-hidden="true"></i> Fragancias importadas</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-heart" aria-hidden="true"></i> Probado en piel sensible</div>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head"><div class="sec-title">Cremas Faciales</div><div class="sec-sub">Cuida tu piel con los mejores ingredientes</div><div class="gold-line"></div></div>
+    <div class="grid-4">
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1200,#2e2000)"><span class="tag">Facial</span>🌿</div>
+        <div class="pcard-body"><div class="pcard-name">Crema Hidratante Día</div><div class="pcard-desc">Hidratación profunda con vitamina C y aloe vera. Protege y nutre tu piel todo el día.</div><div class="pcard-foot"><span class="price">$120</span><button class="add-btn" onclick="addCart('Crema Hidratante Día',120)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e1200,#1a1e00)"><span class="tag">Facial</span>🌙</div>
+        <div class="pcard-body"><div class="pcard-name">Crema Reparadora Noche</div><div class="pcard-desc">Regenera tu piel mientras duermes. Con retinol y aceite de argán para una piel suave.</div><div class="pcard-foot"><span class="price">$145</span><button class="add-btn" onclick="addCart('Crema Reparadora Noche',145)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0e00,#2a1800)"><span class="tag">Facial</span>✨</div>
+        <div class="pcard-body"><div class="pcard-name">Sérum Anti-Edad</div><div class="pcard-desc">Reduce líneas de expresión y manchas. Con colágeno y ácido hialurónico concentrado.</div><div class="pcard-foot"><span class="price"><span class="price-old">$200</span>$165</span><button class="add-btn" onclick="addCart('Sérum Anti-Edad',165)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e0a1a,#1a1030)"><span class="tag">Facial</span>💧</div>
+        <div class="pcard-body"><div class="pcard-name">Contorno de Ojos</div><div class="pcard-desc">Elimina ojeras y bolsas. Fórmula suave ideal para la delicada zona del contorno.</div><div class="pcard-foot"><span class="price">$110</span><button class="add-btn" onclick="addCart('Contorno de Ojos',110)">+ Agregar</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head"><div class="sec-title">Lociones & Colonias</div><div class="sec-sub">Aromas únicos para cada ocasión</div><div class="gold-line"></div></div>
+    <div class="grid-4">
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1400,#2e2400)"><span class="tag">Loción</span>🌺</div>
+        <div class="pcard-body"><div class="pcard-name">Rosa & Jazmín</div><div class="pcard-desc">Hidratación profunda con aroma floral suave y duradero.</div><div class="pcard-foot"><span class="price">$85</span><button class="add-btn" onclick="addCart('Rosa & Jazmín',85)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#161616,#222)"><span class="tag">Colonia</span>💛</div>
+        <div class="pcard-body"><div class="pcard-name">Lavanda Noche</div><div class="pcard-desc">Fragancia fresca y relajante, perfecta para cualquier momento.</div><div class="pcard-foot"><span class="price">$110</span><button class="add-btn" onclick="addCart('Lavanda Noche',110)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1200,#2a1e00)"><span class="tag">Loción</span>🍊</div>
+        <div class="pcard-body"><div class="pcard-name">Cítrico Verano</div><div class="pcard-desc">Energizante con notas de naranja y mandarina.</div><div class="pcard-foot"><span class="price">$90</span><button class="add-btn" onclick="addCart('Cítrico Verano',90)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e1a0e,#172017)"><span class="tag">Colonia</span>🌿</div>
+        <div class="pcard-body"><div class="pcard-name">Brisa Natural</div><div class="pcard-desc">Aroma verde y limpio inspirado en la naturaleza.</div><div class="pcard-foot"><span class="price">$100</span><button class="add-btn" onclick="addCart('Brisa Natural',100)">+ Agregar</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cats-band reveal">
+    <div class="cats-inner">
+      <div class="sec-head"><div class="sec-title">Fragancias por tipo</div><div class="gold-line"></div></div>
+      <div class="cats-grid">
+        <div class="cat-card"><span class="cat-icon">🌸</span><div class="cat-name">Florales</div><div class="cat-count">12 productos</div></div>
+        <div class="cat-card"><span class="cat-icon">🌊</span><div class="cat-name">Frescas</div><div class="cat-count">8 productos</div></div>
+        <div class="cat-card"><span class="cat-icon">🍋</span><div class="cat-name">Cítricas</div><div class="cat-count">6 productos</div></div>
+        <div class="cat-card"><span class="cat-icon">✨</span><div class="cat-name">Orientales</div><div class="cat-count">5 productos</div></div>
+        <div class="cat-card"><span class="cat-icon">🌙</span><div class="cat-name">Nocturnas</div><div class="cat-count">7 productos</div></div>
+        <div class="cat-card"><span class="cat-icon">🌿</span><div class="cat-name">Naturales</div><div class="cat-count">9 productos</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-band reveal">
+    <h2>¿No encuentras tu fragancia?</h2>
+    <p>Escríbenos y te asesoramos personalmente</p>
+    <a href="https://wa.me/1234567890" class="wa-btn"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Pedir por WhatsApp</a>
+  </div>
+</div>
+
+<!-- ══════════════════════ ACCESORIOS ══════════════════════ -->
+<div class="page" id="page-accesorios">
+  <div class="hero" style="min-height:300px;padding:42px 2rem 24px">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Novedades Lalo · Estilo & Moda</p>
+      <h1>Detalles &<br><em>Accesorios</em></h1>
+      <div class="hero-rule"></div>
+      <p>Todo lo que necesitas para completar tu look — desde calcetines hasta lentes de sol.</p>
+    </div>
+  </div>
+
+  <div class="trust" style="background:var(--g3)">
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-star" aria-hidden="true"></i> Tendencias actuales</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-tag" aria-hidden="true"></i> Precios increíbles</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-refresh" aria-hidden="true"></i> Variedad constante</div>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head"><div class="sec-title">Detalles & Accesorios</div><div class="sec-sub">Complementa tu estilo con los mejores detalles</div><div class="gold-line"></div></div>
+    <div class="grid-4">
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e0e1a,#18183a)"><span class="tag">Ropa</span>🧦</div>
+        <div class="pcard-body"><div class="pcard-name">Calcetines Premium</div><div class="pcard-desc">Pack de 3 pares con diseños modernos y estampados. Algodón suave y cómodo.</div><div class="pcard-foot"><span class="price">$55</span><button class="add-btn" onclick="addCart('Calcetines Premium',55)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1000,#2e1e00)"><span class="tag">Accesorio</span>🪭</div>
+        <div class="pcard-body"><div class="pcard-name">Abanico Decorativo</div><div class="pcard-desc">Abanicos artesanales con diseños florales y bordados. Perfectos para el calor.</div><div class="pcard-foot"><span class="price">$65</span><button class="add-btn" onclick="addCart('Abanico Decorativo',65)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0a0e,#2e1018)"><span class="tag">Maquillaje</span>💄</div>
+        <div class="pcard-body"><div class="pcard-name">Set de Maquillaje</div><div class="pcard-desc">Labial, rubor y sombras en tonos naturales y vibrantes. Larga duración.</div><div class="pcard-foot"><span class="price"><span class="price-old">$180</span>$140</span><button class="add-btn" onclick="addCart('Set de Maquillaje',140)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e1a0a,#182e10)"><span class="tag">Bolsillo</span>🦘</div>
+        <div class="pcard-body"><div class="pcard-name">Cangurera Multiusos</div><div class="pcard-desc">Cangurera con múltiples compartimentos. Ideal para deporte, viaje o uso diario.</div><div class="pcard-foot"><span class="price">$95</span><button class="add-btn" onclick="addCart('Cangurera Multiusos',95)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0a00,#2e1800)"><span class="tag">Moda</span>👔</div>
+        <div class="pcard-body"><div class="pcard-name">Cinturón Clásico</div><div class="pcard-desc">Cinturón de cuero sintético en negro y café. Hebilla dorada elegante.</div><div class="pcard-foot"><span class="price">$85</span><button class="add-btn" onclick="addCart('Cinturón Clásico',85)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e0e0e,#1e1e0a)"><span class="tag">Protección</span>🕶️</div>
+        <div class="pcard-body"><div class="pcard-name">Lentes de Sol UV400</div><div class="pcard-desc">Protección UV400 con marcos en colores de moda. Estilo cat-eye y aviador.</div><div class="pcard-foot"><span class="price">$120</span><button class="add-btn" onclick="addCart('Lentes de Sol',120)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0a1218,#0e1e28)"><span class="tag">Cabello</span>💇</div>
+        <div class="pcard-body"><div class="pcard-name">Gel para el Pelo</div><div class="pcard-desc">Fijación fuerte y media. Sin residuos blancos, con brillo y control del cabello.</div><div class="pcard-foot"><span class="price">$45</span><button class="add-btn" onclick="addCart('Gel para el Pelo',45)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1400,#280a0a)"><span class="tag">Maquillaje</span>💋</div>
+        <div class="pcard-body"><div class="pcard-name">Labial Mate Premium</div><div class="pcard-desc">Set de 4 labiales mate en tonos rojo, nude, rosa y coral. Ultra duraderos.</div><div class="pcard-foot"><span class="price">$75</span><button class="add-btn" onclick="addCart('Labial Mate Premium',75)">+ Agregar</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="parallax-band reveal">
+    <blockquote>"Un buen accesorio puede transformar todo tu look."<cite>— Novedades Lalo</cite></blockquote>
+  </div>
+
+  <div class="cats-band reveal">
+    <div class="cats-inner">
+      <div class="sec-head"><div class="sec-title">Explora por categoría</div><div class="gold-line"></div></div>
+      <div class="cats-grid">
+        <div class="cat-card"><span class="cat-icon">🧦</span><div class="cat-name">Calcetines</div><div class="cat-count">15+ estilos</div></div>
+        <div class="cat-card"><span class="cat-icon">🪭</span><div class="cat-name">Abanicos</div><div class="cat-count">8 diseños</div></div>
+        <div class="cat-card"><span class="cat-icon">💄</span><div class="cat-name">Maquillaje</div><div class="cat-count">20+ productos</div></div>
+        <div class="cat-card"><span class="cat-icon">🦘</span><div class="cat-name">Cangureras</div><div class="cat-count">6 modelos</div></div>
+        <div class="cat-card"><span class="cat-icon">👔</span><div class="cat-name">Cinturones</div><div class="cat-count">10 estilos</div></div>
+        <div class="cat-card"><span class="cat-icon">🕶️</span><div class="cat-name">Lentes</div><div class="cat-count">12 marcos</div></div>
+        <div class="cat-card"><span class="cat-icon">💇</span><div class="cat-name">Gel Cabello</div><div class="cat-count">3 marcas</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-band reveal">
+    <h2>¿Buscas algo especial?</h2>
+    <p>Pregúntanos, tenemos mucho más en tienda</p>
+    <a href="https://wa.me/1234567890" class="wa-btn"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Consultar por WhatsApp</a>
+  </div>
+</div>
+
+<!-- ══════════════════════ BOLSAS ══════════════════════ -->
+<div class="page" id="page-bolsas">
+  <div class="hero" style="min-height:300px;padding:42px 2rem 24px">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Novedades Lalo · Moda Femenina</p>
+      <h1>Bolsas para<br><em>la Dama</em></h1>
+      <div class="hero-rule"></div>
+      <p>Diseños modernos y elegantes para cada ocasión — desde el trabajo hasta la fiesta.</p>
+    </div>
+  </div>
+
+  <div class="trust" style="background:var(--g3)">
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-crown" aria-hidden="true"></i> Diseños exclusivos</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-shield-check" aria-hidden="true"></i> Materiales de calidad</div>
+    <div class="trust-item" style="color:#f0e6c8"><i class="ti ti-palette" aria-hidden="true"></i> Colores de temporada</div>
+  </div>
+
+  <div class="sec reveal">
+    <div class="sec-head"><div class="sec-title">Bolsas para Dama</div><div class="sec-sub">Elegancia y funcionalidad en cada diseño</div><div class="gold-line"></div></div>
+    <div class="grid-4">
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0a00,#2e1800)"><span class="tag">Clásica</span>👜</div>
+        <div class="pcard-body"><div class="pcard-name">Bolsa de Mano</div><div class="pcard-desc">Bolsa de mano en cuero sintético negro. Cierre dorado y asa corta. Elegante y versátil.</div><div class="pcard-foot"><span class="price">$185</span><button class="add-btn" onclick="addCart('Bolsa de Mano',185)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e0a1a,#1e1030)"><span class="tag">Fiesta</span>💼</div>
+        <div class="pcard-body"><div class="pcard-name">Clutch Elegante</div><div class="pcard-desc">Clutch con detalles brillantes y cierre magnético. Perfecta para eventos especiales.</div><div class="pcard-foot"><span class="price"><span class="price-old">$220</span>$165</span><button class="add-btn" onclick="addCart('Clutch Elegante',165)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0a1a0e,#102e18)"><span class="tag">Diario</span>👛</div>
+        <div class="pcard-body"><div class="pcard-name">Crossbody Casual</div><div class="pcard-desc">Bolsa cruzada con correa ajustable y múltiples bolsillos. Cómoda y práctica.</div><div class="pcard-foot"><span class="price">$140</span><button class="add-btn" onclick="addCart('Crossbody Casual',140)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a1000,#2a1a00)"><span class="tag">Tote</span>🛍️</div>
+        <div class="pcard-body"><div class="pcard-name">Tote Bag Grande</div><div class="pcard-desc">Bolsa grande estilo tote en lona premium. Ideal para el trabajo, compras o playa.</div><div class="pcard-foot"><span class="price">$120</span><button class="add-btn" onclick="addCart('Tote Bag Grande',120)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0e10,#2a1418)"><span class="tag">Mochila</span>🎒</div>
+        <div class="pcard-body"><div class="pcard-name">Mochila Femenina</div><div class="pcard-desc">Mochila chic con diseño femenino, correas acolchadas y espacio para laptop.</div><div class="pcard-foot"><span class="price">$195</span><button class="add-btn" onclick="addCart('Mochila Femenina',195)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#0e100e,#181e14)"><span class="tag">Mini</span>✨</div>
+        <div class="pcard-body"><div class="pcard-name">Mini Bag Trendy</div><div class="pcard-desc">Bolsita mini con cadena dorada. Súper de moda, ideal para salidas casuales y noches.</div><div class="pcard-foot"><span class="price">$95</span><button class="add-btn" onclick="addCart('Mini Bag Trendy',95)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#14140a,#22200e)"><span class="tag">Paja</span>🌾</div>
+        <div class="pcard-body"><div class="pcard-name">Bolsa de Paja</div><div class="pcard-desc">Bolsa tejida estilo verano con forro interno y asas de piel. Perfecta para la playa.</div><div class="pcard-foot"><span class="price">$130</span><button class="add-btn" onclick="addCart('Bolsa de Paja',130)">+ Agregar</button></div></div>
+      </div>
+      <div class="pcard">
+        <div class="pcard-img" style="background:linear-gradient(135deg,#1a0818,#280e26)"><span class="tag">Clutch</span>💎</div>
+        <div class="pcard-body"><div class="pcard-name">Clutch Satinado</div><div class="pcard-desc">Clutch en tela satinada con detalles perlados. Ideal para bodas y eventos formales.</div><div class="pcard-foot"><span class="price"><span class="price-old">$180</span>$145</span><button class="add-btn" onclick="addCart('Clutch Satinado',145)">+ Agregar</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="parallax-band reveal">
+    <blockquote>"La bolsa correcta completa cualquier outfit."<cite>— Novedades Lalo</cite></blockquote>
+  </div>
+
+  <div class="cats-band reveal">
+    <div class="cats-inner">
+      <div class="sec-head"><div class="sec-title">Estilos disponibles</div><div class="gold-line"></div></div>
+      <div class="cats-grid">
+        <div class="cat-card"><span class="cat-icon">👜</span><div class="cat-name">Bolsa de Mano</div><div class="cat-count">8 modelos</div></div>
+        <div class="cat-card"><span class="cat-icon">💼</span><div class="cat-name">Clutch</div><div class="cat-count">10 diseños</div></div>
+        <div class="cat-card"><span class="cat-icon">👛</span><div class="cat-name">Crossbody</div><div class="cat-count">12 estilos</div></div>
+        <div class="cat-card"><span class="cat-icon">🛍️</span><div class="cat-name">Tote Bags</div><div class="cat-count">6 modelos</div></div>
+        <div class="cat-card"><span class="cat-icon">🎒</span><div class="cat-name">Mochilas</div><div class="cat-count">5 diseños</div></div>
+        <div class="cat-card"><span class="cat-icon">✨</span><div class="cat-name">Mini Bags</div><div class="cat-count">9 estilos</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-band reveal">
+    <h2>¿Quieres ver más modelos?</h2>
+    <p>Contáctanos, tenemos muchos más estilos disponibles</p>
+    <a href="https://wa.me/1234567890" class="wa-btn"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i> Ver catálogo completo</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-brand-name">Novedades Lalo</div>
+      <p>Tu tienda local de fragancias, cremas, accesorios y bolsas. Belleza y estilo para cada día.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Secciones</h4>
+      <ul>
+        <li><a href="#" onclick="showPage('cremas')">Cremas & Perfumes</a></li>
+        <li><a href="#" onclick="showPage('accesorios')">Detalles & Accesorios</a></li>
+        <li><a href="#" onclick="showPage('bolsas')">Bolsas para Dama</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contacto</h4>
+      <ul>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Ubicación</a></li>
+        <li><a href="#">Horarios</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 Novedades Lalo · Todos los derechos reservados</div>
+</footer>
+
+<div class="cart-toast" id="toast">
+  <i class="ti ti-shopping-bag" aria-hidden="true"></i>
+  <span id="toast-msg">Producto agregado</span>
+</div>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active')});
+  var pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  var map={home:0,cremas:1,accesorios:2,bolsas:3};
+  var tabs=document.querySelectorAll('.tab-btn');
+  if(tabs[map[id]])tabs[map[id]].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(initReveal,100);
+}
+
+var cartTotal=0,cartCount=0;
+function addCart(n,p){
+  cartCount++;cartTotal+=p;
+  var t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=n+' agregado — $'+cartTotal+' total';
+  t.style.display='flex';
+  clearTimeout(window._ct);
+  window._ct=setTimeout(function(){t.style.display='none'},2800);
+}
+
+var canvas=document.getElementById('bg');
+var ctx=canvas.getContext('2d');
+var pts=[];
+function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+resize();
+window.addEventListener('resize',resize);
+for(var i=0;i<65;i++)pts.push({x:Math.random()*2000,y:Math.random()*4000,r:Math.random()*1.5+.4,vx:(Math.random()-.5)*.22,vy:-Math.random()*.28-.08,a:Math.random()*Math.PI*2});
+function tick(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(function(p){
+    p.x+=p.vx;p.y+=p.vy;p.a+=.006;
+    if(p.y<-10){p.y=canvas.height+10;p.x=Math.random()*canvas.width}
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(201,168,76,'+(.25+.28*Math.sin(p.a))+')';ctx.fill();
+  });
+  requestAnimationFrame(tick);
+}
+tick();
+
+var hi=document.getElementById('heroInner');
+if(hi)document.addEventListener('mousemove',function(e){
+  var rx=(e.clientX/window.innerWidth-.5)*12;
+  var ry=(e.clientY/window.innerHeight-.5)*-8;
+  hi.style.transform='rotateY('+rx+'deg) rotateX('+ry+'deg)';
+  hi.style.transition='transform .08s linear';
+});
+
+function initReveal(){
+  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el)});
+}
+initReveal();
+
+window.addEventListener('scroll',function(){
+  var sy=window.scrollY;
+  document.querySelectorAll('.parallax-band').forEach(function(b){
+    if(!b.closest('.page.active'))return;
+    var q=b.querySelector('blockquote');
+    if(q)q.style.transform='translateY('+(sy*.08)+'px)';
+  });
+});
+</script>
